@@ -270,7 +270,7 @@
             _goo.c1p2 = _goo._c1p2_ + pts[1] - _goo.msdn[1];
 
             if (mt == true) {
-                var paths = document.getElementsByTagName("path");
+                var paths = Goo.wrapperElement.getElementsByTagName("path");
 
                 for (var i = 0; i < paths.length; i++) {
                     var or = paths[i].or;
