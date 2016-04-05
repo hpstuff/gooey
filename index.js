@@ -452,9 +452,11 @@
         };
 
         this.pth.addEventListener("mousedown", this.mousedown, false);
-        document.getElementsByTagName("svg")[0].appendChild(this.pth);
+        Goo.wrapperElement.appendChild(this.pth);
         this.reset();
     };
+
+    Goo.wrapperElement = document.getElementsByTagName("svg")[0]
 
     var B = function(xPos, xPer) {
         thi = 10 + Math.round(xPer * 400);
@@ -468,13 +470,17 @@
 
     var _to = function(gx, gy) {
         var spt = [0, 0];
-        var svg = document.getElementsByTagName("svg")[0];
+        var svg = Goo.wrapperElement;
         var vb = svg.viewBox.baseVal;
         var vbw = vb.width;
         var vbh = vb.height;
         var vbr = vbw / vbh;
         var vps = vws();
         var vpr = vps[0] / vps[1];
+
+        gx = gx - svg.offsetLeft;
+        gy = gy - svg.offsetTop;
+
 
         if (vbr <= vpr) {
             spt[1] = gy * (vbh / vps[1]);
@@ -496,23 +502,4 @@
     window.Goo = Goo;
 }());
 
-//demo
-(function() {
-    var midX = 400;
-    var midY = 400;
-
-    var g = new Goo(135, midX, midY);
-
-    var t = new Goo(90, midX, 100);
-    t.disabled = true;
-    var l = new Goo(90, 50, midY);
-    l.disabled = true;
-
-    t.onFuse = function(){
-        console.log('t')
-    };
-    l.onFuse = function(){
-        console.log('l')
-    };
-}());
 
