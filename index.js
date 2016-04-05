@@ -472,8 +472,8 @@
         var spt = [0, 0];
         var svg = Goo.wrapperElement;
         var vb = svg.viewBox.baseVal;
-        var vbw = vb.width;
-        var vbh = vb.height;
+        var vbw = svg.offsetWidth;
+        var vbh = svg.offsetHeight;
         var vbr = vbw / vbh;
         var vps = vws();
         var vpr = vps[0] / vps[1];
