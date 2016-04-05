@@ -472,14 +472,16 @@
         var spt = [0, 0];
         var svg = Goo.wrapperElement;
         var vb = svg.viewBox.baseVal;
-        var vbw = svg.offsetWidth;
-        var vbh = svg.offsetHeight;
+        var vbw = vb.width;
+        var vbh = vb.height;
         var vbr = vbw / vbh;
         var vps = vws();
         var vpr = vps[0] / vps[1];
 
-        gx = gx - svg.offsetLeft;
-        gy = gy - svg.offsetTop;
+        var offset = svg.getBoundingClientRect();
+
+        gx = gx - offset.left;
+        gy = gy - offset.top;
 
         if (vb) {
             spt[0] = gx;
@@ -501,6 +503,9 @@
         }
 
         return spt;
+    };
+
+    var _offset = function(){
     };
 
     window.Goo = Goo;
