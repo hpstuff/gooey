@@ -481,7 +481,11 @@
         gx = gx - svg.offsetLeft;
         gy = gy - svg.offsetTop;
 
-
+        if (vb) {
+            spt[0] = gx;
+            spt[1] = gy;
+            return spt;
+        }
         if (vbr <= vpr) {
             spt[1] = gy * (vbh / vps[1]);
 
