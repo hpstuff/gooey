@@ -37,6 +37,7 @@
         this.c2p2 = 0 - this.c1rad + this.c2rad - 1;
         this.pth = document.createElementNS(_svg, "path");
         this.pth.setAttributeNS(null, "class", "pth");
+        this.pth.setAttributeNS(null, "fill", Goo.defaultColor);
         this.pth.or = this;
         this.disabled = false;
 
@@ -457,6 +458,7 @@
     };
 
     Goo.wrapperElement = document.getElementsByTagName("svg")[0]
+    Goo.defaultColor = "#666";
 
     var B = function(xPos, xPer) {
         thi = 10 + Math.round(xPer * 400);
