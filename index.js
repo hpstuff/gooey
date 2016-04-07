@@ -6,7 +6,7 @@
     var _svg = "http://www.w3.org/2000/svg";
     var _xlnk = "http://www.w3.org/1999/xlink";
     var mt = true;
-    var thi = 25;
+    var thi = 5;
 
     var cY_X = function(a, b, r, x) {
         return Math.sqrt(Math.pow(r, 2) - Math.pow(x - a, 2));
@@ -473,7 +473,7 @@
     var _to = function(gx, gy) {
         var spt = [0, 0];
         var svg = Goo.wrapperElement;
-        var vb = svg.viewBox.baseVal;
+        var vb = svg.viewBox.baseVal || {x:0,y:0,width:0,height:0};
         var vbw = vb.width;
         var vbh = vb.height;
         var vbr = vbw / vbh;
@@ -485,7 +485,7 @@
         gx = gx - offset.left;
         gy = gy - offset.top;
 
-        if (vb) {
+        if (vbw === 0) {
             spt[0] = gx;
             spt[1] = gy;
             return spt;
