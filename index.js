@@ -277,7 +277,6 @@
 
             if (mt == true) {
                 var paths = Goo.wrapperElement.getElementsByTagName("path");
-                console.trace(paths.length);
 
                 for (var i = 0; i < paths.length; i++) {
                     var or = paths[i].or;
