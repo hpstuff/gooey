@@ -255,8 +255,13 @@
             _goo.c1mrad = _goo.c1rad;
             _goo.c1mnrad = Math.sqrt(nxtarea / Math.PI);
 
+            _goo.touch_mvsplit = _goo.touch_mvsplit || _touchHandler.bind(document, _goo.mvsplit);
+            _goo.touch_msupSplit = _goo.touch_msupSplit || _touchHandler.bind(document, _goo.msupSplit);
+
             document.addEventListener("mousemove", _goo.mvsplit, false);
+            document.addEventListener("touchmove", _goo.touch_mvsplit, false);
             document.addEventListener("mouseup", _goo.msupSplit, false);
+            document.addEventListener("touchend", _goo.touch_msupSplit, false);
 
             e.stopPropagation();
             e.preventDefault();
@@ -272,6 +277,7 @@
 
             if (mt == true) {
                 var paths = Goo.wrapperElement.getElementsByTagName("path");
+                console.trace(paths.length);
 
                 for (var i = 0; i < paths.length; i++) {
                     var or = paths[i].or;
@@ -283,6 +289,12 @@
                         var c2area = Math.PI * Math.pow(_goo.c1rad, 2);
                         var nxtarea = c1area + c2area;
 
+                        or.touch_mvfuse = or.touch_mvfuse || _touchHandler.bind(document, or.mvfuse);
+                        or.touch_msupFuse = or.touch_msupFuse || _touchHandler.bind(document, or.msupFuse);
+
+                        _goo.touch_mousemove = _goo.touch_mousemove || _touchHandler.bind(document, _goo.mousemove);
+                        _goo.touch_mouseup = _goo.touch_mouseup || _touchHandler.bind(document, _goo.mouseup);
+
                         if (_goo.c1rad < or.c1rad) {
                             or.c1mnrad = or.c1rad;
                             or.c1mrad = Math.sqrt(nxtarea / Math.PI);
@@ -290,15 +302,23 @@
                             or.c2oa = _goo._c1p1_;
                             or.c2ob = _goo._c1p2_;
                             or.msdn = _goo.msdn;
+
                             var dd = dist - or.c1mrad + or.c2rad;
                             if (dd < 1) {
                                 dd = 1;
                             }
                             or.dfuse(dd, calc([or.c1p1, or.c1p2], [_goo.c1p1, _goo.c1p2]));
+
                             document.addEventListener("mousemove", or.mvfuse, false);
+                            document.addEventListener("touchmove", or.touch_mvfuse, false);
                             document.addEventListener("mouseup", or.msupFuse, false);
+                            document.addEventListener("touchend", or.touch_msupFuse, false);
+
                             document.removeEventListener("mousemove", _goo.mousemove, false);
+                            document.removeEventListener("touchmove", _goo.touch_mousemove, false);
                             document.removeEventListener("mouseup", _goo.mouseup, false);
+                            document.removeEventListener("touchend", _goo.touch_mouseup, false);
+
                             _goo.pth.parentNode.removeChild(_goo.pth);
                         } else {
                             or.c1mnrad = _goo.c1rad;
@@ -318,10 +338,17 @@
                                 dd = 1;
                             }
                             or.dfuse(dd, calc([or.c1p1, or.c1p2], [or.c2oa, or.c2ob]));
+
                             document.addEventListener("mousemove", or.mvfusea, false);
+                            document.addEventListener("touchmove", or.touch_mvfuse, false);
                             document.addEventListener("mouseup", or.msupfusea, false);
+                            document.addEventListener("touchend", or.touch_msupFuse, false);
+
                             document.removeEventListener("mousemove", _goo.mousemove, false);
+                            document.removeEventListener("touchmove", _goo.touch_mousemove, false);
                             document.removeEventListener("mouseup", _goo.mouseup, false);
+                            document.removeEventListener("touchend", _goo.touch_mouseup, false);
+
                             _goo.pth.parentNode.removeChild(_goo.pth);
                         }
                         break;
@@ -342,14 +369,25 @@
                 return;
             }
 
+
             if (dist > _goo.c1rad + _goo.fuse * 2 + _goo.c2rad) {
                 var apart = new Goo(_goo.c2rad, pts[0], pts[1]);
+
+                apart.touch_mousemove = _touchHandler.bind(document, apart.mousemove);
+                apart.touch_mouseup = _touchHandler.bind(document, apart.mouseup);
+
                 apart.disabled = true;
                 apart.pth.setAttributeNS(null, "class", "pth joining");
+
                 document.addEventListener("mousemove", apart.mousemove, false);
+                document.addEventListener("touchmove", apart.touch_mousemove, false);
                 document.addEventListener("mouseup", apart.mouseup, false);
+                document.addEventListener("touchend", apart.touch_mouseup, false);
+
                 document.removeEventListener("mousemove", _goo.mvsplit, false);
+                document.removeEventListener("touchmove", _goo.touch_mvsplit, false);
                 document.removeEventListener("mouseup", _goo.msupSplit, false);
+                document.removeEventListener("touchend", _goo.touch_msupSplit, false);
                 //this.c1rad = this.c1mnrad;
                 _goo.reset();
             } else {
@@ -368,10 +406,19 @@
             var dist = Math.sqrt(Math.pow(_goo.c2oa + pts[0] - _goo.msdn[0] - _goo.c1p1, 2) + Math.pow(_goo.c2ob + pts[1] - _goo.msdn[1] - _goo.c1p2, 2));
             if (dist > _goo.c1mnrad + _goo.c2rad) {
                 var apart = new Goo(_goo.c2rad, pts[0], pts[1]);
+
+                apart.touch_mousemove = _touchHandler.bind(document, apart.mousemove);
+                apart.touch_mouseup = _touchHandler.bind(document, apart.mouseup);
+
                 document.addEventListener("mousemove", apart.mousemove, false);
+                document.addEventListener("touchmove", apart.touch_mousemove, false);
                 document.addEventListener("mouseup", apart.mouseup, false);
+                document.addEventListener("touchend", apart.touch_mouseup, false);
+
                 document.removeEventListener("mousemove", _goo.mvfuse, false);
+                document.removeEventListener("touchmove", _goo.touch_mvfuse, false);
                 document.removeEventListener("mouseup", _goo.msupFuse, false);
+                document.removeEventListener("touchend", _goo.touch_msupFuse, false);
                 _goo.pth.setAttributeNS(null, "class", "pth");
                 //_goo.c1rad = _goo.c1mnrad;
                 _goo.reset();
@@ -394,10 +441,22 @@
 
             if (dist > _goo.c1mnrad + _goo.c2rad) {
                 var apart = new Goo(_goo.c2rad, _goo.c2oa, _goo.c2ob);
+
+                _goo.touch_mousemove = _goo.touch_mousemove || _touchHandler.bind(document, _goo.mousemove);
+                _goo.touch_mouseup = _goo.touch_mouseup || _touchHandler.bind(document, _goo.mouseup);
+
+                _goo.touch_mvfusea = _goo.touch_mvfusea || _touchHandler.bind(document, _goo.mvfusea);
+                _goo.touch_msupfusea = _goo.touch_msupfusea || _touchHandler.bind(document, _goo.msupfusea);
+
                 document.addEventListener("mousemove", _goo.mousemove, false);
+                document.addEventListener("touchmove", _goo.touch_mousemove, false);
                 document.addEventListener("mouseup", _goo.mouseup, false);
+                document.addEventListener("touchend", _goo.touch_mouseup, false);
+
                 document.removeEventListener("mousemove", _goo.mvfusea, false);
+                document.removeEventListener("touchmove", _goo.touch_mvfusea, false);
                 document.removeEventListener("mouseup", _goo.msupfusea, false);
+                document.removeEventListener("touchend", _goo.touch_msupfusea, false);
                 //_goo.c1rad = _goo.c1mnrad;
                 _goo.reset();
             } else {
@@ -413,10 +472,12 @@
         };
 
         this.mouseup = function(e) {
-            _goo.destroy();
+            _goo.destroy(e);
             _goo.pth.setAttributeNS(null, "class", "pth");
             document.removeEventListener("mousemove", _goo.mousemove, false);
+            document.removeEventListener("touchmove", _goo.touch_mousemove, false);
             document.removeEventListener("mouseup", _goo.mouseup, false);
+            document.removeEventListener("touchend", _goo.touch_mouseup, false);
             e.stopPropagation();
             e.preventDefault();
         };
@@ -425,7 +486,9 @@
             var pts = _to(e.clientX, e.clientY);
             _goo.brk(pts);
             document.removeEventListener("mousemove", _goo.mvsplit, false);
+            document.removeEventListener("touchmove", _goo.touch_mvsplit, false);
             document.removeEventListener("mouseup", _goo.msupSplit, false);
+            document.removeEventListener("touchend", _goo.touch_msupSplit, false);
             e.stopPropagation();
             e.preventDefault();
         };
@@ -435,7 +498,9 @@
             var pts = _to(e.clientX, e.clientY);
             _goo.fuse_(pts);
             document.removeEventListener("mousemove", _goo.mvfuse, false);
+            document.removeEventListener("touchmove", _goo.touch_mvfuse, false);
             document.removeEventListener("mouseup", _goo.msupFuse, false);
+            document.removeEventListener("touchend", _goo.touch_msupFuse, false);
             e.stopPropagation();
             e.preventDefault();
         };
@@ -443,7 +508,9 @@
         this.msupfusea = function(e) {
             _goo.fuse_([_goo.c2oa, _goo.c2ob]);
             document.removeEventListener("mousemove", _goo.mvfusea, false);
+            document.removeEventListener("touchmove", _goo.touch_mvfusea, false);
             document.removeEventListener("mouseup", _goo.msupfusea, false);
+            document.removeEventListener("touchend", _goo.touch_msupfusea, false);
             e.stopPropagation();
             e.preventDefault();
         };
@@ -452,7 +519,10 @@
             this.pth.parentElement.removeChild(this.pth);
         };
 
+        this.touch_mousedown = _touchHandler.bind(document, this.mousedown);
+
         this.pth.addEventListener("mousedown", this.mousedown, false);
+        this.pth.addEventListener("touchstart", this.touch_mousedown, false);
         Goo.wrapperElement.appendChild(this.pth);
         this.reset();
     };
@@ -508,6 +578,31 @@
     };
 
     var _offset = function(){
+    };
+
+    var _touchHandler = function(callback, e) {
+        // stop touch event
+        e.stopPropagation();
+        e.preventDefault();
+
+        // translate to mouse event
+        var clkEvt = document.createEvent('MouseEvent');
+
+        var types = {
+            touchmove: 'mousemove',
+            touchend: 'mouseup',
+            touchstart: 'mousedown'
+        };
+
+        clkEvt.initMouseEvent(types[e.type], true, true, window, e.detail, 
+                     (e.touches[0] || e.changedTouches[0]).screenX, (e.touches[0] || e.changedTouches[0]).screenY, 
+                     (e.touches[0] || e.changedTouches[0]).clientX, (e.touches[0] || e.changedTouches[0]).clientY, 
+                     false, false, false, false, 
+                     0, null);
+        //this.dispatchEvent(clkEvt);
+
+        // or just handle touch event
+        callback(clkEvt);
     };
 
     window.Goo = Goo;

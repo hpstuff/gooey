@@ -1,0 +1,46 @@
+<html>
+    <head>
+        <style>
+            body {
+                margin: 0;
+            }
+            .name {
+                margin-left: 60px;
+                padding: 0 30px;
+                height: 500px;
+            }
+        </style>
+    </head>
+    <body>
+        <div class="name">
+        <svg id="canvas" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" width="100%" height="100%" version="1.1" fill = 'hsla(166, 95%, 60%, .8)' >
+        </svg>
+        </div>
+        <script src="index.js"></script>
+        <script>
+            //demo
+            (function() {
+                var midX = 400;
+                var midY = 400;
+
+                Goo.wrapperElement = document.getElementById('canvas');
+
+                var size = Goo.wrapperElement.getBoundingClientRect();
+
+                var g = new Goo(135, size.width/2, size.height/2);
+
+                // var t = new Goo(90, midX, 100);
+                // t.disabled = true;
+                // var l = new Goo(90, 50, midY);
+                // l.disabled = true;
+                //
+                // t.onFuse = function(){
+                //     console.log('t')
+                // };
+                // l.onFuse = function(){
+                //     console.log('l')
+                // };
+            }());
+        </script>
+    </body>
+</html>
